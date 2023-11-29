@@ -1,6 +1,15 @@
+using System;
+using ComponentRepair.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(
+        @"Server=.;DataBase=RepaireComponent;Trusted_Connection=True;TrustServerCertificate=true;MultipleActiveResultSets=True"
+//        Configuration.GetConnectionString("DefaulConnection")
+    ));
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
