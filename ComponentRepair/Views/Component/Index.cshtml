@@ -1,12 +1,12 @@
-﻿@model IEnumerable<ComponentRepair.Models.Device>
+﻿@model IEnumerable<ComponentRepair.Models.Component>
 
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2>Device List</h2>
+            <h2>Component List</h2>
         </div>
         <div class="col-6 text-right">
-            <a asp-controller="Device" asp-action="Create" class="btn btn-primary">Create New Device</a>
+            <a asp-controller="Component" asp-action="Create" class="btn btn-primary">Create New Component</a>
         </div>
     </div>
 
@@ -16,13 +16,10 @@
              <thead>
                  <tr>
                      <th>
-                         Device Name
+                         Component Name
                      </th>
                      <th>
-                         Device Price In
-                     </th>
-                     <th>
-                        Device Price Result
+                         Component Price
                      </th>
                      <th></th>
                  </tr>
@@ -32,8 +29,7 @@
                 {
                     <tr>
                         <td width=50%>@obj.Name</td>
-                        <td width=30%>@obj.Pricein</td>
-                        <td width=30%>@obj.Pricerezult</td>
+                        <td width=30%>@obj.Price</td>
                         <td></td>
                     </tr>
                 }
@@ -42,6 +38,6 @@
     }
     else
     {
-        <p>No devices</p>
+        <p>No Components</p>
     }
 </div>

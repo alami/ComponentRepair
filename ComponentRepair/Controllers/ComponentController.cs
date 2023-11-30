@@ -4,16 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ComponentRepair.Controllers
 {
-    public class DeviceController : Controller
+    public class ComponentController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public DeviceController(ApplicationDbContext db)
+        public ComponentController(ApplicationDbContext db)
         {
             _db = db;
         }
         public IActionResult Index()
         {
-            IEnumerable<Device> objList = _db.Device;
+            IEnumerable<Component> objList = _db.Component;
             return View(objList);
         }
         //GET Create
@@ -24,9 +24,9 @@ namespace ComponentRepair.Controllers
         //POST Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Device obj)
+        public IActionResult Create(Component obj)
         {
-            _db.Device.Add (obj);
+            _db.Component.Add (obj);
             _db.SaveChanges();
             return View();
         }
