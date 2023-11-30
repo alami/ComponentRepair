@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ComponentRepair.Models.Device>
+﻿@model ComponentRepair.Models.Device
 
 
 <form method="post" asp-action="Create">
@@ -7,8 +7,57 @@
          <div class="form-group row">
              <h2 class="text-info pl-3">Add Device</h2>
          </div>
-     </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Name"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
 
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Pricein"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Pricein" class="form-control" />
+                        <span asp-validation-for="Pricein" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Pricerezult"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Pricerezult" class="form-control" />
+                        <span asp-validation-for="Pricerezult" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value="Create" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-success w-100">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Back
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @* Keep this empty *@
+            </div>
+
+     </div>
 
 
 </form>
