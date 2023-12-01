@@ -5,8 +5,10 @@
         <div class="col-6">
             <h2>Device List</h2>
         </div>
-        <div class="col-6 text-right">
-            <a asp-controller="Device" asp-action="Create" class="btn btn-primary">Create New Device</a>
+        <div class="col-6 text-end">
+            <a asp-controller="Device" asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create New Device
+            </a>
         </div>
     </div>
 
@@ -37,9 +39,11 @@
                         <td class="text-center">
                             <div class="w075 btn-group" role="group">
                                 <a asp-controller="Device" asp-action="Edit" asp-route-Id="@obj.Id" class="btn btn-primary mx-2">
-                                    Edit</a>
+                                    <i class="fas fa-edit"></i>
+                                </a>
                                 <a asp-controller="Device" asp-action="Delete" asp-route-Id="@obj.Id" class="btn btn-danger mx-2">
-                                    Delete</a>
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
                             </div>
                         </td>
                     </tr>
