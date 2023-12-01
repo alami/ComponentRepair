@@ -26,9 +26,63 @@ namespace ComponentRepair.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Device obj)
         {
-            _db.Device.Add (obj);
+            if (ModelState.IsValid)
+            {
+                _db.Device.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0){
+                return NotFound();
+            }
+            var obj=_db.Device.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+        //POST Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Device obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Device.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0){
+                return NotFound();
+            }
+            var obj=_db.Device.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+        //POST Delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int? id)
+        {
+            var obj = _db.Device.Find(id);
+            if (obj==null) {
+                return NotFound();
+            }
+            _db.Device.Remove(obj);
             _db.SaveChanges();
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }

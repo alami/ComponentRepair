@@ -26,9 +26,13 @@ namespace ComponentRepair.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Component obj)
         {
-            _db.Component.Add (obj);
-            _db.SaveChanges();
-            return View();
+            if (ModelState.IsValid)
+            {
+                _db.Component.Add (obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
         }
     }
 }
