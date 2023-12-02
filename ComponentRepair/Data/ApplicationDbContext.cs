@@ -11,5 +11,6 @@ namespace ComponentRepair.Data
         }
         public DbSet<Device> Device { get; set; }
         public DbSet<Component> Component { get; set; }
+        public DbSet<Product> Product { get; set; }
     }
 }
