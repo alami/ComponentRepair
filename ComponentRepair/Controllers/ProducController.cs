@@ -1,6 +1,8 @@
 ﻿using ComponentRepair.Data;
 using ComponentRepair.Models;
+using ComponentRepair.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ComponentRepair.Controllers
 {
@@ -25,18 +27,25 @@ namespace ComponentRepair.Controllers
         // GET Create & Update
         public ActionResult Upsert(int? id)
         {
-            Product product = new Product();
-            if (id == null)
+            
+            ProductVM productVM = new ProductVM()
             {
-            } else
+                Product = new Product(),
+                DeviceSelectList =  _db.Device.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString(),
+                })
+            };
+            if (id != null)
             {
-                product = _db.Product.Find(id);
-                if (product == null)
+                productVM.Product = _db.Product.Find(id);
+                if (productVM.Product == null)
                 {
                     return NotFound() ;
                 }
             }
-            return View(product);
+            return View(productVM);
         }
 
         // POST: Create & Update
