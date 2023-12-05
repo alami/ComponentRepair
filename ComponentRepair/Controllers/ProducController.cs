@@ -18,11 +18,12 @@ namespace ComponentRepair.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<Product> objList = _db.Product;
-            foreach (var obj in objList)
+            IEnumerable<Product> objList = _db.Product.Include(u=>u.Device).Include(u=>u.Component);
+            /*foreach (var obj in objList)
             {
                 obj.Device = _db.Device.FirstOrDefault(u => u.Id == obj.DeviceId);
-            }
+                obj.Component = _db.Component.FirstOrDefault(u => u.Id == obj.ComponentId);
+            }*/
             return View(objList);
         }
 
