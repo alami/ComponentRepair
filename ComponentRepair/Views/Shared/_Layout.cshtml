@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using ComponentRepair.Utitlity
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -35,6 +39,22 @@
                                 @*<div class="dropdown-divider"></div>
                                  <a class="dropdown-item" href="#">Something else here</a> *@
                             </div>
+                        </li>
+                        <li>
+                            @if (HttpContextAccessor.HttpContext.Session.Get<List<SellReady>>(WC.SessionSellReady) != null)
+                            {
+                                <a asp-action="Index" asp-controller="Sell" class="nav-link">
+                                    @{
+                                        var count = HttpContextAccessor.HttpContext.Session.Get<List<SellReady>>(WC.SessionSellReady).Count;
+                                    }
+                                    <i class="fa-brands fa-sellsy"></i> (@count)
+                                </a>
+                            } else
+                            {
+                                <a href="#" class="nav-link">
+                                    <i class="fa-brands fa-sellsy"></i> (0)
+                                </a>
+                            }
                         </li>
                     </ul>
                 </div>

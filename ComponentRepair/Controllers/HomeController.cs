@@ -1,6 +1,7 @@
 using ComponentRepair.Data;
 using ComponentRepair.Models;
 using ComponentRepair.Models.ViewModels;
+using ComponentRepair.Utitlity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -29,13 +30,61 @@ namespace ComponentRepair.Controllers
         }
         public IActionResult Details(int id)
         {
+            List<SellReady> sellReadyList = new List<SellReady>();
+            if (HttpContext.Session.Get<IEnumerable<SellReady>>(WC.SessionSellReady) != null
+                && HttpContext.Session.Get<IEnumerable<SellReady>>(WC.SessionSellReady).Count() > 0)
+            {
+                sellReadyList = HttpContext.Session.Get<List<SellReady>>(WC.SessionSellReady);
+            }
+
             DetailsVM DetailsVM = new DetailsVM()
             {
                 Product = _db.Product.Include(u => u.Device).Include(u => u.Component)
                 .Where(u=>u.Id == id).FirstOrDefault(),
                 ExistsInSell = false
             };
+
+            foreach (var item in sellReadyList)
+            {
+                if (item.ProductId == id)
+                {
+                    DetailsVM.ExistsInSell = true;
+                }
+            }
+
             return View(DetailsVM);
+        }
+
+        [HttpPost, ActionName("Details")]
+        public IActionResult DetailsPost(int id)
+        {
+            List<SellReady> sellReadyList = new List<SellReady>();
+            if (HttpContext.Session.Get<IEnumerable<SellReady>>(WC.SessionSellReady) != null
+                && HttpContext.Session.Get<IEnumerable<SellReady>>(WC.SessionSellReady).Count() > 0 )
+            {
+                sellReadyList = HttpContext.Session.Get<List<SellReady>>(WC.SessionSellReady);
+            }
+            sellReadyList.Add(new SellReady { ProductId = id });
+            HttpContext.Session.Set(WC.SessionSellReady, sellReadyList);
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult RemoveFromSell (int id)
+        {
+            List<SellReady> sellReadyList = new List<SellReady>();
+            if (HttpContext.Session.Get<IEnumerable<SellReady>>(WC.SessionSellReady) != null
+                && HttpContext.Session.Get<IEnumerable<SellReady>>(WC.SessionSellReady).Count() > 0 )
+            {
+                sellReadyList = HttpContext.Session.Get<List<SellReady>>(WC.SessionSellReady);
+            }
+
+            var itemToRemove = sellReadyList.SingleOrDefault(r => r.ProductId == id);
+            if (itemToRemove!=null)
+            {
+                sellReadyList.Remove(itemToRemove);
+            }
+            
+            HttpContext.Session.Set(WC.SessionSellReady, sellReadyList);
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()
